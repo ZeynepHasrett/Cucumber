@@ -12,11 +12,11 @@ Feature: US1002 ortak baslangic adimlari Background olarak yazilabilir
 
   Scenario: TC05 Kullanici testotomasyonu sitesinde dress bulabilmeli
     When arama kutusuna dress yazip aratir
-    And arama sonucunda urun bulunabildigini test eder
-    Then sayfayi kapatir
+    Then arama sonucunda urun bulunabildigini test eder
+    And sayfayi kapatir
 
 
   Scenario: TC06 Kullanici testotomasyonu sitesinde java bulamamali
     When arama kutusuna java yazip aratir
-    And arama sonucunda urun bulunamadigini test eder
-    Then sayfayi kapatir
+    Then arama sonucunda urun bulunamadigini test eder
+    And sayfayi kapatir

@@ -5,5 +5,5 @@ Feature: US1003 kullanici parametre olarak istedigi kelimeyi girip aratir
     Given kullanici testotomasyonu anasayfaya gider
     When arama kutusuna "baby" yazip aratir
     And senkronizasyon icin 3 saniye bekler
-    And arama sonucunda urun bulunabildigini test eder
-    Then sayfayi kapatir
+    Then arama sonucunda urun bulunabildigini test eder
+    And sayfayi kapatir

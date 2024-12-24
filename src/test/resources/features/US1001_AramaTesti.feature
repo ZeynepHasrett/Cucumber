@@ -12,13 +12,14 @@ Feature: US1001 Testotomasyonu phone arama testi
 
     Given kullanici testotomasyonu anasayfaya gider
     When arama kutusuna dress yazip aratir
-    And arama sonucunda urun bulunabildigini test eder
-    Then sayfayi kapatir
+    Then arama sonucunda urun bulunabildigini test eder
+    And sayfayi kapatir
 
 
   Scenario: TC03 Kullanici testotomasyonu sitesinde java bulamamali
+
     Given kullanici testotomasyonu anasayfaya gider
     When arama kutusuna java yazip aratir
-    And arama sonucunda urun bulunamadigini test eder
-    Then sayfayi kapatir
+    Then arama sonucunda urun bulunamadigini test eder
+    And sayfayi kapatir
 

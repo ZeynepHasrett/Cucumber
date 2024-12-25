@@ -74,17 +74,16 @@ public class TestotomasyonuStepdefinitions {
     @Then("acilan sayfada urun isminde case sensitive olmadan {string} bulundugunu test eder")
     public void acilanSayfadaUrunIsmindeCaseSensitiveOlmadanBulundugunuTestEder(String arananKelime) {
         String actualUrunIsmi = testotomasyonuPage.ilkUrunSayfasindakiIsimElementi
-                                                    .getText()
-                                                    .toLowerCase();
+                .getText()
+                .toLowerCase();
 
         Assertions.assertTrue(actualUrunIsmi.contains(arananKelime));
-
     }
 
     @When("arama kutusuna test data dosyasindaki belirlenen kelimeyi yazip aratir")
     public void aramaKutusunaTestDataDosyasindakiYazipAratir() {
         testotomasyonuPage.aramaKutusu
-                            .sendKeys(ConfigReader.getProperty("toAranacakKelime") + Keys.ENTER);
+                .sendKeys(ConfigReader.getProperty("toAranacakKelime") + Keys.ENTER);
     }
 
     @Then("acilan sayfada urun isminde case sensitive olmadan test data dosyasindaki belirlenen kelime bulundugunu test eder")
@@ -103,8 +102,11 @@ public class TestotomasyonuStepdefinitions {
     }
 
     @Then("url'in test data dosyasinda verilen {string} ile ayni oldugunu test eder")
-    public void url_in_test_data_dosyasinda_verilen_ile_ayni_oldugunu_test_eder(String string) {
+    public void url_in_test_data_dosyasinda_verilen_ile_ayni_oldugunu_test_eder(String configIstenenUrl) {
+        String expectedUrl = ConfigReader.getProperty(configIstenenUrl);
+        String actualUrl = Driver.getDriver().getCurrentUrl();
 
+        Assertions.assertEquals(expectedUrl, actualUrl);
     }
 
 }

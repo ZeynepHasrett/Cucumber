@@ -20,4 +20,16 @@ public class FacebookPage {
     @FindBy(xpath = "//button[text()='Giriş Yap']")
     public WebElement loginButonu;
 
+    @FindBy(xpath = "(//span[.='Allow all cookies'])[4]")
+    public WebElement cookiesKabulButonu;
+
+    @FindBy(xpath = "//*[@*='open-registration-form-button']")
+    public WebElement yeniKayitOlusturButonu;
+
+    @FindBy(name = "firstname")
+    public WebElement kayitOlusturmaFirstnameKutusu;
+
+    @FindBy(name = "websubmit")
+    public WebElement signUpButonu;
+
 }

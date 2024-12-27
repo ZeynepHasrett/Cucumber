@@ -3,10 +3,13 @@ package stepdefinitions;
 import io.cucumber.java.en.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import pages.TestotomasyonuPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
+
+import javax.swing.*;
 
 public class TestotomasyonuStepdefinitions {
 
@@ -107,6 +110,74 @@ public class TestotomasyonuStepdefinitions {
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
         Assertions.assertEquals(expectedUrl, actualUrl);
+    }
+
+    @Then("account butonuna basar")
+    public void account_butonuna_basar() {
+       testotomasyonuPage.accountLinki.click();
+    }
+
+    @Then("email olarak {string} girer")
+    public void email_olarak_girer(String configIstenenEmail) {
+        testotomasyonuPage.emailKutusu.sendKeys(ConfigReader.getProperty(configIstenenEmail));
+    }
+
+    @Then("password olarak {string} girer")
+    public void password_olarak_girer(String configIstenenSifre) {
+        testotomasyonuPage.passwordKutusu.sendKeys(ConfigReader.getProperty(configIstenenSifre));
+
+        Actions actions = new Actions(Driver.getDriver());
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+    }
+
+    @Then("signIn butonuna basar")
+    public void sign_ın_butonuna_basar() {
+        testotomasyonuPage.loginButonu.click();
+    }
+
+    @Then("basarili giris yapilabildigini test eder")
+    public void basarili_giris_yapilabildigini_test_eder() {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+
+        Assertions.assertTrue(testotomasyonuPage.logoutButonu.isDisplayed());
+    }
+
+    @Then("logout butonuna basar")
+    public void logoutButonunaBasar() {
+        testotomasyonuPage.logoutButonu.click();
+    }
+
+    @And("sisteme giris yapamadigini test eder")
+    public void sistemeGirisYapamadiginiTestEder() {
+        Assertions.assertTrue(testotomasyonuPage.emailKutusu.isDisplayed());
+    }
+
+    @Then("arama sonucunda {string} veya daha fazla urun bulunabildigini test eder")
+    public void aramaSonucundaVeyaDahaFazlaUrunBulunabildiginiTestEder(String belirlenenMiktarStr) {
+
+        /*
+            belirlenen sayida veya daha fazla urun bulunabildigini test etmek icin
+            1- sonuc yazisindaki sayiyi alabiliriz
+            2- bulunan urunleri findElements ile locate edip bir listeye koyabilir
+               ve listenin size'ina bakabiliriz
+
+            ANCCCAAAKKK 2.yontemi tercih ederseniz
+            gosterilecek urun olmadiginda, locator implicitlyWait suresince
+            elemanlari locate edebilmek icin bekleyecektir
+            bu da zaman kaybi olur
+      */
+
+        String actualSonucYazisi = testotomasyonuPage.aramaSonucuElementi.getText();
+                                   // 4 Products Found
+
+        String actualSonucSayisiStr = actualSonucYazisi.replaceAll("\\D", "");
+
+        int actualSonucSayisi = Integer.parseInt(actualSonucSayisiStr);
+
+        int expectedSonucSayisi = Integer.parseInt(belirlenenMiktarStr);
+
+        Assertions.assertTrue(actualSonucSayisi >= expectedSonucSayisi);
     }
 
 }

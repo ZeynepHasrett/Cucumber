@@ -1,4 +1,3 @@
-
 Feature: US1009 Kullanici fake bilgilerle kayit olusturmayi dener
 
   Scenario: TC15 kullanici fake bilgilerle kayit olusturabilmeli
@@ -10,4 +9,3 @@ Feature: US1009 Kullanici fake bilgilerle kayit olusturmayi dener
     Then senkronizasyon icin 2 saniye bekler
     And facebook kayit ol tusuna basar
     Then senkronizasyon icin 2 saniye bekler
-    And sayfayi kapatir

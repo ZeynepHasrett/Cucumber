@@ -5,4 +5,4 @@ Feature: US1006 Kullanici url'i dinamik olarak girer
     Given kullanici test data dosyasinda verilen "wiseUrl" anasayfaya gider
     Then url'in test data dosyasinda verilen "wiseUrl" ile ayni oldugunu test eder
     And senkronizasyon icin 5 saniye bekler
-    And sayfayi kapatir
+

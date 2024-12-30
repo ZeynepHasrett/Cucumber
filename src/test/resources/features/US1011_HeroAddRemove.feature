@@ -1,5 +1,6 @@
 Feature: US1011 Kullanici butonlari calistirir
 
+  @paralel1
   Scenario: TC17 Kullanici butonlari kullanabilmeli
 
     Given kullanici test data dosyasinda verilen "herokuUrl" anasayfaya gider

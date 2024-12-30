@@ -6,4 +6,3 @@ Feature: US1003 kullanici parametre olarak istedigi kelimeyi girip aratir
     When arama kutusuna "baby" yazip aratir
     And senkronizasyon icin 3 saniye bekler
     Then arama sonucunda urun bulunabildigini test eder
-    And sayfayi kapatir

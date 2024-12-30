@@ -1,6 +1,9 @@
 package stepdefinitions;
 
 import io.cucumber.java.en.*;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
@@ -10,10 +13,21 @@ import utilities.Driver;
 import utilities.ReusableMethods;
 
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class TestotomasyonuStepdefinitions {
 
     TestotomasyonuPage testotomasyonuPage = new TestotomasyonuPage();
+
+    String satirdakiUrunIsmi;
+    Double actualSonucSayisi;
+    Double satirdakiMinBulunacakUrunSayisi;
+    Sheet calisilanSayfa;
+    String excelDosyaYolu;
+    Workbook workbook;
 
     @Given("kullanici testotomasyonu anasayfaya gider")
     public void kullanici_testotomasyonu_anasayfaya_gider() {
@@ -132,6 +146,9 @@ public class TestotomasyonuStepdefinitions {
 
     @Then("signIn butonuna basar")
     public void sign_ın_butonuna_basar() {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+
         testotomasyonuPage.loginButonu.click();
     }
 
@@ -178,6 +195,63 @@ public class TestotomasyonuStepdefinitions {
         int expectedSonucSayisi = Integer.parseInt(belirlenenMiktarStr);
 
         Assertions.assertTrue(actualSonucSayisi >= expectedSonucSayisi);
+    }
+
+    @When("email olarak listede verilen {string} girer")
+    public void email_olarak_listede_verilen_girer(String direktEmail) {
+        testotomasyonuPage.emailKutusu.sendKeys(direktEmail);
+    }
+
+    @And("password olarak listede verilen {string} girer")
+    public void password_olarak_listede_verilen_girer(String direktPassword) {
+        testotomasyonuPage.passwordKutusu.sendKeys(direktPassword);
+    }
+
+    @Then("urun excelindeki {string} daki urunun min. miktarini ve urun ismini kaydeder")
+    public void urun_excelindeki_daki_urunun_min_miktarini_ve_urun_ismini_kaydeder(String excelSatirNoStr) throws IOException {
+
+        excelDosyaYolu = "src/test/resources/urunListesi.xlsx";
+        FileInputStream fileInputStream = new FileInputStream(excelDosyaYolu);
+        workbook = WorkbookFactory.create(fileInputStream);
+        calisilanSayfa = workbook.getSheet("Sheet1");
+
+        int satirNo = Integer.parseInt(excelSatirNoStr);
+
+        satirdakiUrunIsmi = calisilanSayfa.getRow(satirNo - 1).getCell(0).getStringCellValue();
+        satirdakiMinBulunacakUrunSayisi = calisilanSayfa.getRow(satirNo - 1).getCell(1).getNumericCellValue();
+    }
+
+    @Then("urun ismini testotomasyonu sayfasinda arar ve sonuc sayisini kaydeder")
+    public void urun_ismini_testotomasyonu_sayfasinda_arar_ve_sonuc_sayisini_kaydeder() {
+        testotomasyonuPage.aramaKutusu.sendKeys(satirdakiUrunIsmi + Keys.ENTER);
+
+        String actualSonucYazisi = testotomasyonuPage.aramaSonucuElementi.getText();
+
+        String actualSonucSayisiStr = actualSonucYazisi.replaceAll("\\D", "");
+
+        actualSonucSayisi = Double.parseDouble(actualSonucSayisiStr);
+    }
+
+    @Then("bulunan urun sayisinin {string} da verilen min. miktardan fazla oldugunu test eder")
+    public void bulunan_urun_sayisinin_da_verilen_min_miktardan_fazla_oldugunu_test_eder(String satirNoStr) {
+        Assertions.assertTrue(actualSonucSayisi >= satirdakiMinBulunacakUrunSayisi);
+    }
+
+    @Then("bulunan sonuc sayisini excelde {string} daki {int}. sutuna yazdirir")
+    public void bulunan_sonuc_sayisini_excelde_daki_sutuna_yazdirir(String satirNoStr, Integer sutunNo) throws IOException {
+
+        int satirNo = Integer.parseInt(satirNoStr);
+
+        calisilanSayfa
+                .getRow(satirNo - 1)
+                .createCell(sutunNo-1)
+                .setCellValue(actualSonucSayisi);
+
+        FileOutputStream fileOutputStream = new FileOutputStream(excelDosyaYolu);
+        workbook.write(fileOutputStream);
+
+        fileOutputStream.close();
+        workbook.close();
     }
 
 }

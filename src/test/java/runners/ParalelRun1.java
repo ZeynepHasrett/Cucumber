@@ -18,4 +18,29 @@ import org.junit.platform.suite.api.Suite;
 //@ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME,value = "pretty, junit:target/xml-report/cucumber1.xml")
 
 public class ParalelRun1 {
+
+    /*
+        Cucumber'da toplu calistirmayi Runner class'indan yapiyoruz
+
+        Paralel olarak birden fazla browser'i calismasi icin
+        birden fazla Runner Class hazirlamaliyiz
+
+        Birden fazla Runner class'i oldugunda, hepsini birlikte
+        manuel olarak calistirmamiz MUMKUN olmadigindan
+        Terminal'den bu Runner class'larini calistirabilecegimiz
+        bir yapi olusturmaliyiz
+
+        Terminalden Runner class calistirmak icin
+        1- Maven'i sistem degiskenlerine eklemeliyiz
+        2- pom.xml'e terminalden calistirmayi saglayacak
+           ve bize guzel HTML raporlar olusturacak
+           bazi plugin'leri eklemeliyiz
+        3- ekledigimiz plugin'lerde
+           calisacak Runner adedi ve
+           calisacak Runner'larin bulundugu yer
+           ve isimlerindeki ortak bolumu guncellememiz gerekir
+        4- Terminal'den mvn clean verify yazarak
+           pluginler uzerinden istenen Runner Class'lar calistirilabilir
+     */
+
 }

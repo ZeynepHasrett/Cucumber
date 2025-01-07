@@ -49,16 +49,25 @@ public class ExcelStepdefinitions {
     public void baskenti_olan_ulkenin_turkce_isminin_oldugunu_test_eder(String verilenIngilizceBaskent, String expectedTurkceUlkeIsmi) {
         // ingilizce baskent ismi Jakarta olan ulkeyi bulmak icin
         // her bir satiri kontrol etmeliyiz
+        for (int i = 0; i <= sayfa1.getLastRowNum() ; i++) {
 
+            String satirdakiIngilizceBaskent = sayfa1.getRow(i)
+                    .getCell(1)
+                    .getStringCellValue();
 
+            if (satirdakiIngilizceBaskent.equals(verilenIngilizceBaskent)){
 
-        // bir satirda baskent ismini Jakarta bulursak
-        // o satirda Turkce ulke ismini alip
+                // bir satirda baskent ismini Jakarta bulursak
+                // o satirda Turkce ulke ismini alip
+                String satirdakiTurkceUlkeIsmi = sayfa1.getRow(i)
+                        .getCell(2)
+                        .getStringCellValue();
+                // expected ulke ismiyle ayni oldugunu test ederiz
 
-
-
-        // expected ulke ismiyle ayni oldugunu test ederiz
-
+                Assertions.assertEquals(expectedTurkceUlkeIsmi,satirdakiTurkceUlkeIsmi);
+                break;
+            }
+        }
     }
 
     @Then("excelde kayitli ulke sayisinin {int} oldugunu test eder")

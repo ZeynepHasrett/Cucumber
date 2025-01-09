@@ -71,13 +71,20 @@ public class ExcelStepdefinitions {
     }
 
     @Then("excelde kayitli ulke sayisinin {int} oldugunu test eder")
-    public void excelde_kayitli_ulke_sayisinin_oldugunu_test_eder(Integer int1) {
+    public void excelde_kayitli_ulke_sayisinin_oldugunu_test_eder(Integer expectedUlkeSayisi) {
+        int actualUlkeSayisi = sayfa1.getLastRowNum()+1-1;
+        // +1 getLastRowNum() bize index getrdiginden satir sayisini bulmak icin ekledik
+        // -1 en basta baslik oldugundan 1 cikardik
+
+        Assertions.assertEquals(expectedUlkeSayisi,actualUlkeSayisi);
 
     }
 
     @Then("excelde kullanilan fiziki satir sayisinin {int} oldugunu test eder")
-    public void excelde_kullanilan_fiziki_satir_sayisinin_oldugunu_test_eder(Integer int1) {
+    public void excelde_kullanilan_fiziki_satir_sayisinin_oldugunu_test_eder(Integer expectedKullanilanSatirSayisi) {
+        int actualKullanilanSatirSayisi = sayfa1.getPhysicalNumberOfRows();
 
+        Assertions.assertEquals(expectedKullanilanSatirSayisi,actualKullanilanSatirSayisi);
     }
 
     @When("Tum bilgileri map olarak kaydedip")

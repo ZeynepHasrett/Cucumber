@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Assertions;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 
 public class ExcelStepdefinitions {
 
     Workbook workbook;
     Sheet sayfa1;
     String actualHucreData;
+    Map<String, Map<String,String>> ulkelerMap;
 
     @Given("kullanici baskentler exceline ulasir")
     public void kullanici_baskentler_exceline_ulasir() throws IOException {
@@ -89,6 +91,47 @@ public class ExcelStepdefinitions {
 
     @When("Tum bilgileri map olarak kaydedip")
     public void tum_bilgileri_map_olarak_kaydedip() {
+/*
+            map'i olusturmadan once bazi kararlari almamiz lazim
+
+            1- hangi bilgiler map'de tutulacak?
+               ingilizceUlkeIsmi, ingilizceBaskentIsmi, turkceUlkeIsmi, turkceBaskentIsmi
+
+            2- hangi bilgi key olacak?
+               ingilizceBaskentIsmi key olacak
+
+            3- Kalan bilgiler nasil tek bir value yapilacak?
+                ingilizceUlkeIsmi, turkceUlkeIsmi, turkceBaskentIsmi
+                - birlestirip tek bir String yapmak
+                - map yapmak
+                - array veya list yapmak
+                biz map yapmayi tercih ettik
+
+         */
+
+        ulkelerMap = new TreeMap<>();
+        //   String, Map<String,String>
+
+        Map<String,String> valueMap;
+
+        for (int i = 1; i <= sayfa1.getLastRowNum() ; i++) {
+
+            valueMap = new TreeMap<>();
+            valueMap.put("ingilizceUlkeIsmi", sayfa1.getRow(i).getCell(0).getStringCellValue());
+            valueMap.put("turkceUlkeIsmi",sayfa1.getRow(i).getCell(2).getStringCellValue());
+            valueMap.put("turkceBaskentIsmi",sayfa1.getRow(i).getCell(3).getStringCellValue());
+
+            ulkelerMap.put(sayfa1.getRow(i).getCell(1).getStringCellValue(),valueMap);
+
+        }
+
+        /*
+            {
+              Abidjan = {ingilizceUlkeIsmi=Ivory Coast, turkceBaskentIsmi=Abidjan, turkceUlkeIsmi=Fildişi Sahili},
+              Abu Dhabi={ingilizceUlkeIsmi=United Arab Emirates, turkceBaskentIsmi=Abu Dabi, turkceUlkeIsmi=Birleşik Arap Emrlikleri},
+              Abuja={ingilizceUlkeIsmi=Nigeria, turkceBaskentIsmi=Abuja, turkceUlkeIsmi=Nijerya},
+              Accra={ingilizceUlkeIsmi=Ghana, turkceBaskentIsmi=Accra, turkceUlkeIsmi=Gana}
+         */
 
     }
 

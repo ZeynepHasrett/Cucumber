@@ -17,7 +17,7 @@ public class ExcelStepdefinitions {
     Workbook workbook;
     Sheet sayfa1;
     String actualHucreData;
-    Map<String, Map<String,String>> ulkelerMap;
+    Map<String, Map<String, String>> ulkelerMap;
 
     @Given("kullanici baskentler exceline ulasir")
     public void kullanici_baskentler_exceline_ulasir() throws IOException {
@@ -31,7 +31,7 @@ public class ExcelStepdefinitions {
     @Then("{int}.satir {int}.hucredeki datayi yazdirir")
     public void satir_hucredeki_datayi_yazdirir(Integer satirNo, Integer hucreNo) {
         System.out.println(satirNo + ". satir " + hucreNo + ". hucredeki bilgi : " +
-                           sayfa1.getRow(satirNo - 1).getCell(hucreNo - 1));
+                sayfa1.getRow(satirNo - 1).getCell(hucreNo - 1));
 
     }
 
@@ -51,13 +51,13 @@ public class ExcelStepdefinitions {
     public void baskenti_olan_ulkenin_turkce_isminin_oldugunu_test_eder(String verilenIngilizceBaskent, String expectedTurkceUlkeIsmi) {
         // ingilizce baskent ismi Jakarta olan ulkeyi bulmak icin
         // her bir satiri kontrol etmeliyiz
-        for (int i = 0; i <= sayfa1.getLastRowNum() ; i++) {
+        for (int i = 0; i <= sayfa1.getLastRowNum(); i++) {
 
             String satirdakiIngilizceBaskent = sayfa1.getRow(i)
                     .getCell(1)
                     .getStringCellValue();
 
-            if (satirdakiIngilizceBaskent.equals(verilenIngilizceBaskent)){
+            if (satirdakiIngilizceBaskent.equals(verilenIngilizceBaskent)) {
 
                 // bir satirda baskent ismini Jakarta bulursak
                 // o satirda Turkce ulke ismini alip
@@ -66,7 +66,7 @@ public class ExcelStepdefinitions {
                         .getStringCellValue();
                 // expected ulke ismiyle ayni oldugunu test ederiz
 
-                Assertions.assertEquals(expectedTurkceUlkeIsmi,satirdakiTurkceUlkeIsmi);
+                Assertions.assertEquals(expectedTurkceUlkeIsmi, satirdakiTurkceUlkeIsmi);
                 break;
             }
         }
@@ -74,11 +74,11 @@ public class ExcelStepdefinitions {
 
     @Then("excelde kayitli ulke sayisinin {int} oldugunu test eder")
     public void excelde_kayitli_ulke_sayisinin_oldugunu_test_eder(Integer expectedUlkeSayisi) {
-        int actualUlkeSayisi = sayfa1.getLastRowNum()+1-1;
+        int actualUlkeSayisi = sayfa1.getLastRowNum() + 1 - 1;
         // +1 getLastRowNum() bize index getrdiginden satir sayisini bulmak icin ekledik
         // -1 en basta baslik oldugundan 1 cikardik
 
-        Assertions.assertEquals(expectedUlkeSayisi,actualUlkeSayisi);
+        Assertions.assertEquals(expectedUlkeSayisi, actualUlkeSayisi);
 
     }
 
@@ -86,7 +86,7 @@ public class ExcelStepdefinitions {
     public void excelde_kullanilan_fiziki_satir_sayisinin_oldugunu_test_eder(Integer expectedKullanilanSatirSayisi) {
         int actualKullanilanSatirSayisi = sayfa1.getPhysicalNumberOfRows();
 
-        Assertions.assertEquals(expectedKullanilanSatirSayisi,actualKullanilanSatirSayisi);
+        Assertions.assertEquals(expectedKullanilanSatirSayisi, actualKullanilanSatirSayisi);
     }
 
     @When("Tum bilgileri map olarak kaydedip")
@@ -112,16 +112,16 @@ public class ExcelStepdefinitions {
         ulkelerMap = new TreeMap<>();
         //   String, Map<String,String>
 
-        Map<String,String> valueMap;
+        Map<String, String> valueMap;
 
-        for (int i = 1; i <= sayfa1.getLastRowNum() ; i++) {
+        for (int i = 1; i <= sayfa1.getLastRowNum(); i++) {
 
             valueMap = new TreeMap<>();
             valueMap.put("ingilizceUlkeIsmi", sayfa1.getRow(i).getCell(0).getStringCellValue());
-            valueMap.put("turkceUlkeIsmi",sayfa1.getRow(i).getCell(2).getStringCellValue());
-            valueMap.put("turkceBaskentIsmi",sayfa1.getRow(i).getCell(3).getStringCellValue());
+            valueMap.put("turkceUlkeIsmi", sayfa1.getRow(i).getCell(2).getStringCellValue());
+            valueMap.put("turkceBaskentIsmi", sayfa1.getRow(i).getCell(3).getStringCellValue());
 
-            ulkelerMap.put(sayfa1.getRow(i).getCell(1).getStringCellValue(),valueMap);
+            ulkelerMap.put(sayfa1.getRow(i).getCell(1).getStringCellValue(), valueMap);
 
         }
 
@@ -136,7 +136,15 @@ public class ExcelStepdefinitions {
     }
 
     @Then("Ingilizce baskent ismi {string} olan ulkenin tum bilgilerini yazdirir")
-    public void ıngilizce_baskent_ismi_olan_ulkenin_tum_bilgilerini_yazdirir(String string) {
+    public void ıngilizce_baskent_ismi_olan_ulkenin_tum_bilgilerini_yazdirir(String verilenIngilizceBaskentIsmi) {
+        System.out.println(ulkelerMap.get(verilenIngilizceBaskentIsmi));
+        // {ingilizceUlkeIsmi=Indonesia, turkceBaskentIsmi=Cakarta, turkceUlkeIsmi=Endonezya}
+
+        System.out.println("Baskent ismi " + verilenIngilizceBaskentIsmi + " olan ulke bilgileri : \n"
+                + "Ingilizce ulke ismi : " + ulkelerMap.get(verilenIngilizceBaskentIsmi).get("ingilizceUlkeIsmi")
+                + "\nTurkce ulke ismi : " + ulkelerMap.get(verilenIngilizceBaskentIsmi).get("turkceUlkeIsmi")
+                + "\nTurkce baskent ismi : " + ulkelerMap.get(verilenIngilizceBaskentIsmi).get("turkceBaskentIsmi")
+        );
 
     }
 

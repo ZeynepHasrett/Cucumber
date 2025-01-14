@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 public class ExcelStepdefinitions {
@@ -149,8 +150,28 @@ public class ExcelStepdefinitions {
     }
 
     @Then("mapi kullanarak Turkce ismi {string} olan bir ulke bulundugunu test eder")
-    public void mapi_kullanarak_turkce_ismi_olan_bir_ulke_bulundugunu_test_eder(String string) {
+    public void mapi_kullanarak_turkce_ismi_olan_bir_ulke_bulundugunu_test_eder(String verilenTurkceUlkeIsmi) {
+// Turkce ulke ismi value icindeki bilgilerden biri
+        // ulkelerMap.containsValue() kullanmak icin TUM VALUE'nun verilmis olmasi lazim
+        // Bu durumda tum value'leri gozden gecirebilmek icin
+        // map'den tum value'leri alip, farkli bir formatta kaydetmeliyiz
 
+        Collection<Map<String,String>> valueCollection = ulkelerMap.values();
+
+        // valueCollection'daki herbir value'yu ele almak icin
+        // bir for-each loop olusturabiliriz
+        boolean arananUlkeVarMi = false;
+
+        for (Map<String,String> eachValueMap  :valueCollection){
+
+            if (eachValueMap.get("turkceUlkeIsmi").equals(verilenTurkceUlkeIsmi)){
+                arananUlkeVarMi = true;
+                break;
+            }
+        }
+
+        Assertions.assertTrue(arananUlkeVarMi);
+    }
     }
 
 }

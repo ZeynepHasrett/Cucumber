@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ExcelStepdefinitions {
 
@@ -156,15 +157,15 @@ public class ExcelStepdefinitions {
         // Bu durumda tum value'leri gozden gecirebilmek icin
         // map'den tum value'leri alip, farkli bir formatta kaydetmeliyiz
 
-        Collection<Map<String,String>> valueCollection = ulkelerMap.values();
+        Collection<Map<String, String>> valueCollection = ulkelerMap.values();
 
         // valueCollection'daki herbir value'yu ele almak icin
         // bir for-each loop olusturabiliriz
         boolean arananUlkeVarMi = false;
 
-        for (Map<String,String> eachValueMap  :valueCollection){
+        for (Map<String, String> eachValueMap : valueCollection) {
 
-            if (eachValueMap.get("turkceUlkeIsmi").equals(verilenTurkceUlkeIsmi)){
+            if (eachValueMap.get("turkceUlkeIsmi").equals(verilenTurkceUlkeIsmi)) {
                 arananUlkeVarMi = true;
                 break;
             }
@@ -172,6 +173,6 @@ public class ExcelStepdefinitions {
 
         Assertions.assertTrue(arananUlkeVarMi);
     }
-    }
 
 }
+

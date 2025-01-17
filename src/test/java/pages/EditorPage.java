@@ -14,4 +14,10 @@ public class EditorPage {
     @FindBy(xpath = "//*[@class='dt-button buttons-create']")
     public WebElement newButonu;
 
+    @FindBy(xpath = "//*[@id='DTE_Field_first_name']")
+    public WebElement firstNameKutusu;
+
+    @FindBy(xpath = "//*[@class='btn']")
+    public WebElement createButonu;
+
 }

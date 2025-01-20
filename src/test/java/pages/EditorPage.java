@@ -20,4 +20,7 @@ public class EditorPage {
     @FindBy(xpath = "//*[@class='btn']")
     public WebElement createButonu;
 
+    @FindBy(xpath = "//*[@type='search']")
+    public WebElement searchKutusu;
+
 }

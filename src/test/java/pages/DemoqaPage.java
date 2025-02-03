@@ -18,4 +18,16 @@ public class DemoqaPage {
     @FindBy(id = "timerAlertButton")
     public WebElement timerAlertButton;
 
+    @FindBy(xpath = "//span[.='Dynamic Properties']")
+    public WebElement dynamicPropertiesMenu;
+
+    @FindBy(xpath = "//*[.='Elements']")
+    public WebElement elementsSekmesi;
+
+    @FindBy(id = "enableAfter")
+    public WebElement enableAfter5SecondsButonu;
+
+    @FindBy(id = "visibleAfter")
+    public WebElement visibleAfter5Seconds;
+
 }

@@ -39,4 +39,24 @@ public class DemoqaStepdefinitions {
 
     }
 
+    @Then("Ok diyerek alerti kapatir")
+    public void ok_diyerek_alerti_kapatir() {
+
+        Driver.getDriver()
+                .switchTo()
+                .alert()
+                .accept();
+    }
+
+    @Then("soldaki sekmelerden Elements'e tiklar")
+    public void soldakiSekmelerdenElementsETiklar() {
+
+        demoqaPage.elementsSekmesi.click();
+    }
+
+    @And("acilan menuden Dynamic Properties'e tiklar")
+    public void acilanMenudenDynamicPropertiesETiklar() {
+        demoqaPage.dynamicPropertiesMenu.click();
+    }
+
 }

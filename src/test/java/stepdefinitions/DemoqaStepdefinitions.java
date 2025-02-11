@@ -59,4 +59,18 @@ public class DemoqaStepdefinitions {
         demoqaPage.dynamicPropertiesMenu.click();
     }
 
+    @Then("Will enable {int} seconds butonunun enable olmasini bekler")
+    public void will_enable_seconds_butonunun_enable_olmasini_bekler(Integer onemsiz) {
+
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),Duration.ofSeconds(20));
+
+        wait.until(ExpectedConditions.elementToBeClickable(demoqaPage.enableAfter5SecondsButonu));
+    }
+
+    @Then("butonun enable oldugunu test eder")
+    public void butonun_enable_oldugunu_test_eder() {
+
+        Assertions.assertTrue( demoqaPage.enableAfter5SecondsButonu.isEnabled());
+    }
+
 }

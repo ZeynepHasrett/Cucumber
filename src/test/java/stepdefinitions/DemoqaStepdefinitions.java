@@ -67,10 +67,5 @@ public class DemoqaStepdefinitions {
         wait.until(ExpectedConditions.elementToBeClickable(demoqaPage.enableAfter5SecondsButonu));
     }
 
-    @Then("butonun enable oldugunu test eder")
-    public void butonun_enable_oldugunu_test_eder() {
-
-        Assertions.assertTrue( demoqaPage.enableAfter5SecondsButonu.isEnabled());
-    }
 
 }

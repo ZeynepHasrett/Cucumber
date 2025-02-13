@@ -91,5 +91,10 @@ public class DemoqaStepdefinitions {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("visibleAfter")));
     }
 
+    @Then("butonun visible oldugunu test eder")
+    public void butonunVisibleOldugunuTestEder() {
+        Assertions.assertTrue(demoqaPage.visibleAfter5Seconds.isDisplayed());
+    }
+
 
 }

@@ -29,5 +29,4 @@ public class DemoqaPage {
 
     @FindBy(id = "visibleAfter")
     public WebElement visibleAfter5Seconds;
-
 }

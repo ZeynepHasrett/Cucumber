@@ -3,12 +3,16 @@ package stepdefinitions;
 import io.cucumber.java.en.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.DemoqaPage;
 import utilities.Driver;
+import utilities.ReusableMethods;
 
+import javax.swing.*;
 import java.time.Duration;
 
 public class DemoqaStepdefinitions {
@@ -17,25 +21,36 @@ public class DemoqaStepdefinitions {
 
     @Then("soldaki sekmelerden Alerts'e tiklar")
     public void soldaki_sekmelerden_alerts_e_tiklar() {
+
         demoqaPage.alertsSekmesi.click();
     }
 
     @When("On button click, alert will appear after {int} seconds karsisindaki click me butonuna basar")
     public void on_button_click_alert_will_appear_after_seconds_karsisindaki_click_me_butonuna_basar(Integer int1) {
+
         demoqaPage.timerAlertButton.click();
     }
 
-    @When("Alert’in gorunur olmasini bekler")
+    @When("Allert’in gorunur olmasini bekler")
     public void alert_in_gorunur_olmasini_bekler() {
 
+        // 1.adim wait objesi olusturmak
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(20));
+
+        // 2.adim mumkunse wait icin kullanacagimiz Webelementi locate edip kaydedin
+        //        biz alert'i bekleyecegimiz icin locate edecek bir sey yok
+
+        // 3.adim expectedConditions kullanarak wait objesini bekletin
         wait.until(ExpectedConditions.alertIsPresent());
     }
 
-    @Then("Alert uzerindeki yazinin {string} oldugunu test eder")
+    @Then("Allert uzerindeki yazinin {string} oldugunu test eder")
     public void alert_uzerindeki_yazinin_oldugunu_test_eder(String expectedAlertYazi) {
 
-        String actualAlertYazi = Driver.getDriver().switchTo().alert().getText();
+        String actualAlertYazi = Driver.getDriver()
+                                        .switchTo()
+                                        .alert()
+                                        .getText();
 
         Assertions.assertEquals(expectedAlertYazi,actualAlertYazi);
 
@@ -58,6 +73,11 @@ public class DemoqaStepdefinitions {
 
     @And("acilan menuden Dynamic Properties'e tiklar")
     public void acilanMenudenDynamicPropertiesETiklar() {
+
+        Actions action = new Actions(Driver.getDriver());
+        ReusableMethods.bekle(5);
+        action.sendKeys(Keys.PAGE_DOWN).perform();
+
         demoqaPage.dynamicPropertiesMenu.click();
     }
 
@@ -94,8 +114,8 @@ public class DemoqaStepdefinitions {
 
     @Then("butonun visible oldugunu test eder")
     public void butonunVisibleOldugunuTestEder() {
+
         Assertions.assertTrue(demoqaPage.visibleAfter5Seconds.isDisplayed());
     }
-
 
 }

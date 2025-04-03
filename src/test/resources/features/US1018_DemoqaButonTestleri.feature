@@ -1,6 +1,6 @@
 Feature: US1018 kullanici Demoqa sayfasindaki butonlari kullanir
 
-
+  @wip
   Scenario: TC24 kullanici butonlarin calistigini test edebilmeli
 
     Given kullanici test data dosyasinda verilen "demoqaUrl" anasayfaya gider
